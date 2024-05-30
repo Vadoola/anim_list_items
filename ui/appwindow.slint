@@ -1,4 +1,4 @@
-import { Button, VerticalBox , ListView} from "std-widgets.slint";
+import { Button, VerticalBox , ListView } from "std-widgets.slint";
 
 export struct mod_str {
     text: string,
@@ -22,97 +22,58 @@ export component AppWindow inherits Window {
             width: 100%;
             height: 200px;
             for data in list_mod : Rectangle {
-                    height: 30px;
-                    Rectangle {
-                        height: 25px;
-                        width: 90%;
-                        background: orange;
-                        opacity: 100;
-                        Text {
-                            text: data.text;
-                        }
+                height: 30px;
+                Rectangle {
+                    property<int> test-init: 0;
 
-                        states [
-                            //hd when !self.visible : {
-                            hd when (hide && data.hidden) : {
-                                opacity: 0;
-                                background: red;
-    
-                                out {
-                                    animate * {
-                                        duration: 2000ms;
-                                        easing: ease-in-out;
-                                    }
-                                }
-                                in {
-                                    animate * {
-                                        duration: 2000ms;
-                                        easing: ease-in-out;
-                                    }
-                                }
-                                
-                            }
-    
-                            //nhd when self.visible: {
-                            nhd when !(hide && data.hidden) : {
-                                opacity: 100;
-                                background: orange;
-    
-                                in {
-                                    animate * {
-                                        duration: 2000ms;
-                                        easing: ease-in-out;
-                                    }
-                                }
-                                out {
-                                    animate * {
-                                        duration: 2000ms;
-                                        easing: ease-in-out;
-                                    }
-                                }
-                            }
-                        ]
+                    height: 25px;
+                    width: 90%;
+                    //background: blue;
+                    opacity: 100;
+                    Text {
+                        text: data.text;
                     }
-                    /*states [
-                        //hd when !self.visible : {
+                    states [
                         hd when (hide && data.hidden) : {
-                            opacity: 0;
+                            //opacity: 0;
                             background: red;
+                            //x: -self.width;
 
-                            out {
-                                animate * {
-                                    duration: 2000ms;
+                            /*out {
+                                animate opacity, background {
+                                    duration: 1000ms;
                                     easing: ease-in-out;
                                 }
-                            }
+                            }*/
                             in {
                                 animate * {
-                                    duration: 2000ms;
+                                    duration: 1000ms;
                                     easing: ease-in-out;
                                 }
                             }
-                            
                         }
 
-                        //nhd when self.visible: {
                         nhd when !(hide && data.hidden) : {
-                            opacity: 100;
-                            background: orange;
+                            //opacity: 100;
+                            background: blue;
+                            //x: 0;
 
                             in {
                                 animate * {
-                                    duration: 2000ms;
+                                    delay: 2000ms;
+                                    duration: 1000ms;
                                     easing: ease-in-out;
                                 }
                             }
-                            out {
-                                animate * {
-                                    duration: 2000ms;
+                            /*out {
+                                animate opacity, background {
+                                    duration: 1000ms;
                                     easing: ease-in-out;
                                 }
-                            }
+                            }*/
                         }
-                    ]*/
+                    ]
+                }
             }
         }
     }
