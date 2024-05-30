@@ -8,6 +8,8 @@ export struct mod_str {
 export component AppWindow inherits Window {
     in property <[mod_str]> list_mod;
     out property<bool> hide: false;
+    in property<length> anim_x: 0;
+    out property<length> anim_wid: lv.width;
 
     callback up_mod();
     VerticalBox {
@@ -18,13 +20,13 @@ export component AppWindow inherits Window {
                 up_mod();
             }
         }
-        ListView {
+        lv := ListView {
             width: 100%;
             height: 200px;
             for data in list_mod : Rectangle {
                 height: 30px;
                 rect := Rectangle {
-                    property<int> test-init: 0;
+                    property<length> anim_x: root.anim_x;
 
                     x: 0;
                     height: 25px;
@@ -35,34 +37,21 @@ export component AppWindow inherits Window {
                         text: data.text;
                     }
 
-                    //Ok So this slide in / slide out
-                    //seems to be working for "sliding out" by delaying the trigger of the filter_model.reset() with a timer
-                    //However so far no combination I have tried works for sliding in. There is no delay on the filter_model.reset()
-                    //so the model should update immediatly, but even if I add a delay on the animation the items appear immediatly,
-                    //no sliding in, no delaying, it just appears
                     states [
                         hd when (hide && data.hidden) : {
-                            x: -self.width;
-
-                            out {
-                                    animate x {
-                                    delay: 20000ms;
-                                    duration: 5000ms;
-                                    easing: ease-in-out;
-                                }
-                            }
+                            x: -lv.width;
                         }
 
                         nhd when !(hide && data.hidden) : {
-                            x: 0;
+                            x: data.hidden ? anim_x : 0;
 
-                            /*in {
+                            in {
                                 animate x {
-                                    delay: 20000ms;
-                                    duration: 5000ms;
+                                    delay: 250ms;
+                                    duration: 250ms;
                                     easing: ease-in-out;
                                 }
-                            }*/
+                            }
                             out {
                                 animate x {
                                     duration: 250ms;

@@ -47,7 +47,15 @@ fn main() -> Result<(), slint::PlatformError> {
                 },
             );
         } else {
+            timer_ui.set_anim_x(-timer_ui.get_anim_wid());
             filt_mod.reset();
+            timer.start(
+                slint::TimerMode::SingleShot,
+                std::time::Duration::from_millis(250),
+                move || {
+                    timer_ui.set_anim_x(0.0);
+                }
+            )
         }
     });
 
