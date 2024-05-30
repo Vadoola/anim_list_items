@@ -23,54 +23,52 @@ export component AppWindow inherits Window {
             height: 200px;
             for data in list_mod : Rectangle {
                 height: 30px;
-                Rectangle {
+                rect := Rectangle {
                     property<int> test-init: 0;
 
+                    x: 0;
                     height: 25px;
                     width: 90%;
-                    //background: blue;
+                    background: #9400D3;
                     opacity: 100;
                     Text {
                         text: data.text;
                     }
+
+                    //Ok So this slide in / slide out
+                    //seems to be working for "sliding out" by delaying the trigger of the filter_model.reset() with a timer
+                    //However so far no combination I have tried works for sliding in. There is no delay on the filter_model.reset()
+                    //so the model should update immediatly, but even if I add a delay on the animation the items appear immediatly,
+                    //no sliding in, no delaying, it just appears
                     states [
                         hd when (hide && data.hidden) : {
-                            //opacity: 0;
-                            background: red;
-                            //x: -self.width;
+                            x: -self.width;
 
-                            /*out {
-                                animate opacity, background {
-                                    duration: 1000ms;
-                                    easing: ease-in-out;
-                                }
-                            }*/
-                            in {
-                                animate * {
-                                    duration: 1000ms;
+                            out {
+                                    animate x {
+                                    delay: 20000ms;
+                                    duration: 5000ms;
                                     easing: ease-in-out;
                                 }
                             }
                         }
 
                         nhd when !(hide && data.hidden) : {
-                            //opacity: 100;
-                            background: blue;
-                            //x: 0;
+                            x: 0;
 
-                            in {
-                                animate * {
-                                    delay: 2000ms;
-                                    duration: 1000ms;
-                                    easing: ease-in-out;
-                                }
-                            }
-                            /*out {
-                                animate opacity, background {
-                                    duration: 1000ms;
+                            /*in {
+                                animate x {
+                                    delay: 20000ms;
+                                    duration: 5000ms;
                                     easing: ease-in-out;
                                 }
                             }*/
+                            out {
+                                animate x {
+                                    duration: 250ms;
+                                    easing: ease-in-out;
+                                }
+                            }
                         }
                     ]
                 }
